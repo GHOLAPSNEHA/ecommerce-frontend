@@ -4,3 +4,304 @@ body {
   padding: 0;
   text-align: center;
 }
+
+/* ----- Header Layout ----- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ----- Hero Section ----- */
+.hero {
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+
+  /* Background options */
+  background: url('../assets/hero-bg.jpg') center/cover no-repeat;
+  /* If you don't have an image, use a gradient instead:
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  */
+}
+
+.hero-content {
+  max-width: 600px;
+  color: #b61616;
+  animation: fadeIn 1.2s ease-in-out forwards;
+  opacity: 0;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 25px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* CTA Button */
+.cta-btn {
+  display: inline-block;
+  padding: 15px 35px;
+  background: #ff6347;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: #ff3a1a;
+  transform: scale(1.05);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Logo */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Navigation */
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #444;
+}
+
+.nav-links a:hover {
+  color: #000;
+}
+
+/* Right Items */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Search Box */
+.search-box input {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+/* Cart */
+.cart {
+  position: relative;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: crimson;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* Hamburger hidden on desktop */
+.hamburger {
+  font-size: 26px;
+  cursor: pointer;
+  display: none;
+}
+
+/* ----- Responsive Design ----- */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    /* hide desktop nav */
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+
+  .hamburger {
+    display: block;
+    /* show on mobile */
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 70vh;
+    padding: 20px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .cta-btn {
+    padding: 12px 28px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 60vh;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+}
+
+/* ----- Product Section ----- */
+.product-section {
+  padding: 60px 40px;
+  background: #f9f9f9;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* ----- Product Grid Layout ----- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+/* Product Card */
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.product-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.product-card p {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* CTA Button */
+.add-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #ff6347;
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.add-btn:hover {
+  background: #ff3f1f;
+  transform: scale(1.05);
+}
+
+/* ----- Responsive Grid ----- */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .product-section {
+    padding: 40px 20px;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 15px;
+  display: none;
+  font-size: 18px;
+}
+
+.error {
+  text-align: center;
+  color: red;
+  margin-bottom: 20px;
+  display: none;
+}
