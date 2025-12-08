@@ -122,3 +122,127 @@ window.addEventListener("DOMContentLoaded", () => {
     fetchProducts();
   }
 });
+
+
+card.addEventListener("click", () => {
+  window.location.href = `product.html?id=${product.id}`;
+});
+
+
+function renderProduct(product) {
+  detailContainer.innerHTML = `
+    <div class="product-wrapper">
+
+      <div class="product-images">
+        <img id="mainImage" src="${product.image}" alt="${product.title}">
+      </div>
+
+      <div class="product-info">
+        <h1>${product.title}</h1>
+        <p class="price">$${product.price.toFixed(2)}</p>
+        <p class="description">${product.description}</p>
+
+        <div class="variation-box">
+          <label>Size:</label>
+          <select id="sizeSelect">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+          </select>
+        </div>
+
+        <div class="quantity-box">
+          <button id="minusBtn">−</button>
+          <span id="qty">1</span>
+          <button id="plusBtn">+</button>
+        </div>
+
+        <button class="add-cart-btn" id="addToCartBtn">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
+
+  setupQuantityButtons();
+  setupAddToCart(product);
+  enableImageZoom();
+  //updateDynamicPrice(product.price);
+}
+
+
+function setupAddToCart(product) {
+  document.getElementById("addToCartBtn").addEventListener("click", () => {
+    const size = document.getElementById("sizeSelect").value;
+    const quantity = parseInt(document.getElementById("qty").innerText);
+
+    const cartItem = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      size: size,
+      qty: quantity
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(cartItem);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+    alert("Added to Cart!");
+  });
+}
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+updateCartCount();
+
+function setupQuantityButtons() {
+  const qty = document.getElementById("qty");
+  const plus = document.getElementById("plusBtn");
+  const minus = document.getElementById("minusBtn");
+
+  plus.addEventListener("click", () => {
+    qty.innerText = parseInt(qty.innerText) + 1;
+  });
+
+  minus.addEventListener("click", () => {
+    if (qty.innerText > 1) {
+      qty.innerText = parseInt(qty.innerText) - 1;
+    }
+  });
+}
+
+
+function enableImageZoom() {
+  const img = document.getElementById("mainImage");
+
+  img.addEventListener("mousemove", function (e) {
+    const rect = img.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    img.style.transform = "scale(1.8)";
+    img.style.transformOrigin = `${x}% ${y}%`;
+  });
+
+  img.addEventListener("mouseleave", function () {
+    img.style.transform = "scale(1)";
+  });
+}
+
+// function updateDynamicPrice(basePrice) {
+//   const qty = document.getElementById("qty");
+//   const priceEl = document.querySelector(".price");
+
+//   qty.addEventListener("DOMSubtreeModified", () => {
+//     const qtyValue = parseInt(qty.innerText);
+//     const totalPrice = (basePrice * qtyValue).toFixed(2);
+//     priceEl.innerText = "$" + totalPrice;
+//   });
+// }
