@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cart - ShopEase</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/cart.css">
+</head>
+<body>
+  <!-- reuse your header (or paste header HTML here) -->
+  <header class="header">
+    <div class="logo">ShopEase</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="header-right">
+      <div class="cart">
+        <a href="cart.html" aria-label="View cart">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-count">0</span>
+        </a>
+      </div>
+      <div class="hamburger">☰</div>
+    </div>
+  </header>
+
+  <main class="cart-main">
+    <h1>Your Cart</h1>
+    <div class="cart-container">
+      <div class="cart-items" id="cartItems">
+        <!-- items injected here -->
+      </div>
+
+      <aside class="cart-summary">
+        <h2>Order Summary</h2>
+        <div class="summary-row">
+          <span>Items</span>
+          <span id="summaryItems">0</span>
+        </div>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="summarySubtotal">$0.00</span>
+        </div>
+        <a href="checkout.html">
+        <button id="checkoutBtn" class="checkout-btn">Proceed to Checkout</button>
+        </a>
+        <button id="clearCartBtn" class="clear-btn">Clear Cart</button>
+      </aside>
+    </div>
+  </main>
+
+  <script src="scripts/cart.js"></script>
+</body>
+</html>

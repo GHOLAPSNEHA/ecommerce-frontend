@@ -1,10 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
 /* ----- Header Layout ----- */
 .header {
   display: flex;
@@ -14,75 +7,6 @@ body {
   background: #ffffff;
   border-bottom: 1px solid #ddd;
 }
-
-/* ----- Hero Section ----- */
-.hero {
-  width: 100%;
-  height: 85vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0 20px;
-
-  /* Background options */
-  background: url('../assets/hero-bg.jpg') center/cover no-repeat;
-  /* If you don't have an image, use a gradient instead:
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  */
-}
-
-.hero-content {
-  max-width: 600px;
-  color: #b61616;
-  animation: fadeIn 1.2s ease-in-out forwards;
-  opacity: 0;
-}
-
-.hero h1 {
-  font-size: 48px;
-  font-weight: 800;
-  margin-bottom: 15px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.hero p {
-  font-size: 18px;
-  margin-bottom: 25px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-}
-
-/* CTA Button */
-.cta-btn {
-  display: inline-block;
-  padding: 15px 35px;
-  background: #ff6347;
-  color: #fff;
-  font-size: 18px;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s ease;
-}
-
-.cta-btn:hover {
-  background: #ff3a1a;
-  transform: scale(1.05);
-}
-
-/* Fade In Animation */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 
 /* Logo */
 .logo {
@@ -149,8 +73,7 @@ body {
 /* ----- Responsive Design ----- */
 @media (max-width: 768px) {
   .nav-links {
-    display: none;
-    /* hide desktop nav */
+    display: none;   /* hide desktop nav */
     flex-direction: column;
     position: absolute;
     top: 70px;
@@ -162,9 +85,69 @@ body {
   }
 
   .hamburger {
-    display: block;
-    /* show on mobile */
+    display: block; /* show on mobile */
   }
+}
+
+/* ----- Hero Section ----- */
+.hero {
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+
+  /* Background options */
+  background: url('../assets/hero-bg.jpg') center/cover no-repeat;
+  /* If you don't have an image, use a gradient instead:
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  */
+}
+
+.hero-content {
+  max-width: 600px;
+  color: #d93d3d;
+  animation: fadeIn 1.2s ease-in-out forwards;
+  opacity: 0;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 25px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* CTA Button */
+.cta-btn {
+  display: inline-block;
+  padding: 15px 35px;
+  background: #ff6347;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: #ff3a1a;
+  transform: scale(1.05);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
@@ -172,7 +155,7 @@ body {
     height: 70vh;
     padding: 20px;
   }
-
+  
   .hero h1 {
     font-size: 32px;
   }
@@ -225,7 +208,7 @@ body {
   padding: 20px;
   text-align: center;
   transition: 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .product-card:hover {
@@ -292,16 +275,16 @@ body {
   }
 }
 
-.loading {
-  text-align: center;
-  padding: 15px;
-  display: none;
-  font-size: 18px;
+.cart {
+  position: relative;
 }
-
-.error {
-  text-align: center;
-  color: red;
-  margin-bottom: 20px;
-  display: none;
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: crimson;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
 }

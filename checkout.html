@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout - ShopEase</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/checkout.css" />
+</head>
+<body>
+  <!-- reuse header (same as other pages) -->
+  <header class="header">
+    <div class="logo">ShopEase</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="header-right">
+      <div class="cart">
+        <a href="cart.html" aria-label="View cart">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-count">0</span>
+        </a>
+      </div>
+      <div class="hamburger">☰</div>
+    </div>
+  </header>
+
+  <main class="checkout-main">
+    <section class="checkout-left">
+      <h1>Checkout</h1>
+      <form id="checkoutForm">
+        <label>
+          Full name
+          <input type="text" name="name" required />
+        </label>
+
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+
+        <label>
+          Phone
+          <input type="tel" name="phone" />
+        </label>
+
+        <label>
+          Shipping Address
+          <textarea name="address" rows="4" required></textarea>
+        </label>
+
+        <div class="payment-note">
+          <p>This demo does not process payments. Clicking "Place Order" will create an order on the demo server.</p>
+        </div>
+
+        <button type="submit" class="checkout-place-btn">Place Order</button>
+      </form>
+    </section>
+
+    <aside class="checkout-right">
+      <h2>Order Summary</h2>
+      <div id="orderSummary">
+        <!-- injected -->
+      </div>
+      <div class="summary-total">
+        <span>Subtotal</span>
+        <span id="checkoutSubtotal">$0.00</span>
+      </div>
+    </aside>
+  </main>
+
+  <script src="scripts/checkout.js"></script>
+</body>
+</html>

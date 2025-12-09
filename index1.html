@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Frontend</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">ShopEase</div>
+
+    <!-- Navigation Menu -->
+<nav class="nav-links">
+  <a href="index.html">Home</a>
+  <a href="#products">Products</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- Right Side Icons  -->
+<div class="header-right">
+  <!-- Search Bar -->
+  <div class="search-box">
+    <input type="text" placeholder="Search products..." />
+  </div>
+
+  <!-- # Cart Icon  -->
+  <div class="cart">
+    <a href="cart.html" class="cart-link">
+      <span class="cart-icon">🛒</span>
+      <span class="cart-count">3</span>
+    </a>
+  </div>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger">
+    ☰
+  </div>
+</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Biggest Sale of the Year!</h1>
+    <p>Up to 50% off on your favorite products. Don’t miss out!</p>
+    <a href="#products" class="cta-btn">Shop Now</a>
+  </div>
+</section>
+
+<!-- 
+  <section id="products" class="product-section">
+    <h2 class="section-title">Featured Products</h2>
+
+    <div class="product-grid" id="productGrid">
+    Dynamic product cards will be inserted here by JavaScript
+
+    </div>
+  </section> 
+   -->
+
+<section id="products" class="product-section">
+  <h2 class="section-title">Products</h2>
+
+
+  <div id="loadingMessage" class="loading">Loading products...</div>
+  <div id="errorMessage" class="error"></div>
+
+  <div class="product-grid" id="productGrid">
+    <!-- Dynamic product cards will be inserted here by JavaScript -->
+
+  </div>
+</section>
+
+<script src="scripts/app.js"></script>
+
+</body>
+
+</html>

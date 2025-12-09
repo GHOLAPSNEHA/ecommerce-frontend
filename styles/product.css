@@ -41,7 +41,6 @@
   border-radius: 8px;
   cursor: pointer;
 }
-
 @media (max-width: 768px) {
   .product-wrapper {
     flex-direction: column;
@@ -52,4 +51,26 @@
     width: 100%;
     height: auto;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.product-detail {
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+}
+
+.product-detail img {
+  width: 300px;
 }

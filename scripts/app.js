@@ -1,5 +1,4 @@
-//console.log("E-Commerce Website Loaded");
-
+// Hamburger menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 
@@ -8,6 +7,7 @@ hamburger.addEventListener('click', () => {
     navLinks.style.display === 'flex' ? 'none' : 'flex';
 });
 
+// Smooth scroll to products section
 document.querySelector('.cta-btn').addEventListener('click', e => {
   e.preventDefault();
   document.querySelector('#products').scrollIntoView({
@@ -15,7 +15,7 @@ document.querySelector('.cta-btn').addEventListener('click', e => {
   });
 });
 
-const productGrid = document.getElementById('productGrid');
+//const productGrid = document.getElementById('productGrid');
 
 // Fetch products from FakeStore API
 async function loadProducts() {
@@ -44,205 +44,128 @@ async function loadProducts() {
 }
 
 loadProducts();
+//-----------
 
-// Improved version with loading indicator and error handling
+// scripts/app.js
+const productGrid = document.getElementById('productGrid');
+const CART_KEY = 'shopease_cart';
 
-const API_URL = "https://fakestoreapi.com/products";
-
-async function fetchProducts() {
+//Utility: get cart from localStorage
+function getCart() {
   try {
-    // Show loading before fetch
-    showLoading();
+    return JSON.parse(localStorage.getItem(CART_KEY)) || {};
+  } catch (e) {
+    return {};
+  }
+}
 
-    const response = await fetch(API_URL);
-    const data = await response.json();
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartCount();
 
-    // Save in cache for performance
-    localStorage.setItem("products", JSON.stringify(data));
+  // background: save cart to backend (best-effort)
+  try {
+    const userId = localStorage.getItem('shopease_guestid') || ('guest_' + Math.random().toString(36).slice(2,10));
+    if (!localStorage.getItem('shopease_guestid')) localStorage.setItem('shopease_guestid', userId);
+    fetch('http://localhost:4000/api/cart/' + userId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cart })
+    }).catch(err => console.warn('Failed to sync cart to server', err));
+  } catch(e){
+    console.warn('Cart sync skipped', e);
+  }
+}
 
-    hideLoading();
-    renderProducts(data);
+
+// Update header cart count
+function updateCartCount() {
+  const cartCountEl = document.querySelector('.cart-count');
+  const cart = getCart();
+  const totalCount = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
+  cartCountEl.textContent = totalCount;
+}
+
+// Add product to cart (or increase qty)
+function addToCart(product) {
+  const cart = getCart();
+  if (cart[product.id]) {
+    cart[product.id].qty += 1;
+  } else {
+    cart[product.id] = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      qty: 1
+    };
+  }
+  saveCart(cart);
+  // small visual feedback
+  const btn = document.querySelector(`button[data-id="${product.id}"]`);
+  if (btn) {
+    btn.textContent = 'Added ✓';
+    setTimeout(() => btn.textContent = 'Add to Cart', 900);
+  }
+}
+
+// Render product cards
+async function loadProducts() {
+  try {
+    const res = await fetch('https://fakestoreapi.com/products');
+    const products = await res.json();
+
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy">
+        <h3>${escapeHtml(squeezeTitle(p.title, 60))}</h3>
+        <p>$${Number(p.price).toFixed(2)}</p>
+        <button class="add-btn" data-id="${p.id}">Add to Cart</button>
+      `;
+      productGrid.appendChild(card);
+    });
+
+    // attach add-to-cart listeners
+    document.querySelectorAll('.add-btn').forEach(button => {
+      button.addEventListener('click', async (e) => {
+        const id = e.currentTarget.dataset.id;
+        // find product data (re-fetch single product for reliable data)
+        try {
+          const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+          const product = await response.json();
+          addToCart(product);
+        } catch (err) {
+          console.error('Failed to add product', err);
+        }
+      });
+    });
 
   } catch (error) {
-    console.error("API Error:", error);
-    showError("Failed to load products.");
+    console.error('Error loading products:', error);
+    if (productGrid) productGrid.innerHTML = '<p>Failed to load products.</p>';
+  } finally {
+    updateCartCount();
   }
 }
 
-function renderProducts(products) {
-  const grid = document.getElementById("productGrid");
-  grid.innerHTML = ""; // Clear old content
-
-  products.forEach(product => {
-    const card = document.createElement("div");
-    card.classList.add("product-card");
-
-    card.innerHTML = `
-      <img src="${product.image}" loading="lazy" alt="${product.title}">
-      <h3>${product.title.substring(0, 20)}...</h3>
-      <p>$${product.price.toFixed(2)}</p>
-      <a class="add-btn">Add to Cart</a>
-    `;
-
-    grid.appendChild(card);
-  });
+// small helpers
+function squeezeTitle(s, len=50) {
+  return s.length > len ? s.slice(0,len-1) + '…' : s;
 }
 
-function showLoading() {
-  document.getElementById("loadingMessage").style.display = "block";
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m];});
 }
 
-function hideLoading() {
-  document.getElementById("loadingMessage").style.display = "none";
-}
-
-function showError(message) {
-  document.getElementById("errorMessage").innerText = message;
-  document.getElementById("errorMessage").style.display = "block";
-}
-
-// Initial load with cache check
-const cached = localStorage.getItem("products");
-
-if (cached) {
-  renderProducts(JSON.parse(cached));
-} else {
-  fetchProducts();  // first-time load
-}
-
-
-
-// Auto-load products on page load
-window.addEventListener("DOMContentLoaded", () => {
-  const cached = localStorage.getItem("products");
-
-  if (cached) {
-    renderProducts(JSON.parse(cached));
-  } else {
-    fetchProducts();
-  }
+// init
+document.addEventListener('DOMContentLoaded', () => {
+  if (productGrid) loadProducts();
+  updateCartCount();
 });
 
 
 card.addEventListener("click", () => {
   window.location.href = `product.html?id=${product.id}`;
 });
-
-
-function renderProduct(product) {
-  detailContainer.innerHTML = `
-    <div class="product-wrapper">
-
-      <div class="product-images">
-        <img id="mainImage" src="${product.image}" alt="${product.title}">
-      </div>
-
-      <div class="product-info">
-        <h1>${product.title}</h1>
-        <p class="price">$${product.price.toFixed(2)}</p>
-        <p class="description">${product.description}</p>
-
-        <div class="variation-box">
-          <label>Size:</label>
-          <select id="sizeSelect">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-          </select>
-        </div>
-
-        <div class="quantity-box">
-          <button id="minusBtn">−</button>
-          <span id="qty">1</span>
-          <button id="plusBtn">+</button>
-        </div>
-
-        <button class="add-cart-btn" id="addToCartBtn">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-  `;
-
-  setupQuantityButtons();
-  setupAddToCart(product);
-  enableImageZoom();
-  //updateDynamicPrice(product.price);
-}
-
-
-function setupAddToCart(product) {
-  document.getElementById("addToCartBtn").addEventListener("click", () => {
-    const size = document.getElementById("sizeSelect").value;
-    const quantity = parseInt(document.getElementById("qty").innerText);
-
-    const cartItem = {
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      image: product.image,
-      size: size,
-      qty: quantity
-    };
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(cartItem);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    updateCartCount();
-    alert("Added to Cart!");
-  });
-}
-
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  document.getElementById("cartCount").innerText = cart.length;
-}
-
-updateCartCount();
-
-function setupQuantityButtons() {
-  const qty = document.getElementById("qty");
-  const plus = document.getElementById("plusBtn");
-  const minus = document.getElementById("minusBtn");
-
-  plus.addEventListener("click", () => {
-    qty.innerText = parseInt(qty.innerText) + 1;
-  });
-
-  minus.addEventListener("click", () => {
-    if (qty.innerText > 1) {
-      qty.innerText = parseInt(qty.innerText) - 1;
-    }
-  });
-}
-
-
-function enableImageZoom() {
-  const img = document.getElementById("mainImage");
-
-  img.addEventListener("mousemove", function (e) {
-    const rect = img.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-    img.style.transform = "scale(1.8)";
-    img.style.transformOrigin = `${x}% ${y}%`;
-  });
-
-  img.addEventListener("mouseleave", function () {
-    img.style.transform = "scale(1)";
-  });
-}
-
-// function updateDynamicPrice(basePrice) {
-//   const qty = document.getElementById("qty");
-//   const priceEl = document.querySelector(".price");
-
-//   qty.addEventListener("DOMSubtreeModified", () => {
-//     const qtyValue = parseInt(qty.innerText);
-//     const totalPrice = (basePrice * qtyValue).toFixed(2);
-//     priceEl.innerText = "$" + totalPrice;
-//   });
-// }

@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-Commerce Frontend</title>
-  <link rel="stylesheet" href="styles/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopEase - Home</title>
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
 
 <body>
@@ -14,8 +14,8 @@
 
     <!-- Navigation Menu -->
     <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Products</a>
+      <a href="index.html">Home</a>
+      <a href="#products">Products</a>
       <a href="#">About</a>
       <a href="#">Contact</a>
     </nav>
@@ -29,9 +29,11 @@
 
       <!-- Cart Icon -->
       <div class="cart">
+      <a href="cart.html" aria-label="View cart">
         <span class="cart-icon">🛒</span>
-        <span class="cart-count">3</span>
-      </div>
+        <span class="cart-count"> </span>
+      </a>
+    </div>
 
       <!-- Hamburger Menu -->
       <div class="hamburger">
@@ -46,38 +48,20 @@
       <p>Up to 50% off on your favorite products. Don’t miss out!</p>
       <a href="#products" class="cta-btn">Shop Now</a>
     </div>
+
+    
+
   </section>
-
-  <!-- 
   <section id="products" class="product-section">
-    <h2 class="section-title">Featured Products</h2>
+      <h2 class="section-title">Featured Products</h2>
 
-    <div class="product-grid" id="productGrid">
-    Dynamic product cards will be inserted here by JavaScript
-
-    </div>
-  </section> 
--->
-
-  <section id="products" class="product-section">
-    <h2 class="section-title">Products</h2>
-
-    <div id="loadingMessage" class="loading">Loading products...</div>
-    <div id="errorMessage" class="error"></div>
-
-    <div class="product-grid" id="productGrid"></div>
-  </section>
-
-
-
-
-
+      <div class="product-grid" id="productGrid">
+        <!-- Dynamic product cards will be inserted here -->
+      </div>
+    </section>
 
 
   <script src="scripts/app.js"></script>
-
-
-
 </body>
 
 </html>
