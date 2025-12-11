@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | ShopEase</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/auth.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">ShopEase</div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#products">Products</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="login.html" class="btn-login">Login</a>
+      <a href="signup.html" class="btn-signup">Sign Up</a>
+    </nav>
+
+    <!-- Right Side Icons -->
+    <div class="header-right">
+      <!-- Search Bar -->
+      <div class="search-box">
+        <input type="text" placeholder="Search products..." />
+      </div>
+</header>
+<div class="auth-container">
+    <form id="loginForm" class="auth-box">
+      <h2>Welcome Back</h2>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required />
+        <span class="error" id="loginEmailError"></span>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <div class="password-field">
+          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+          <span class="toggle-pass" onclick="togglePassword('loginPassword')">👁</span>
+        </div>
+        <span class="error" id="loginPasswordError"></span>
+      </div>
+
+      <a href="forgot-password.html" class="forgot">Forgot Password?</a>
+
+      <button type="submit" class="auth-btn">Login</button>
+
+      <p class="switch-form">
+        Don't have an account? <a href="signup.html">Sign Up</a>
+      </p>
+    </form>
+  </div>
+ <!-- 🔹 Footer -->
+    <footer class="footer">
+        <p>© 2025 ShopEase. All Rights Reserved.</p>
+    </footer>
+  <script src="scripts/auth.js"></script>
+</body>
+</html>
